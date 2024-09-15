@@ -1,23 +1,56 @@
-import * as React from 'react';
-// import {useNavigation} from '@react-navigation/native';
-// import {StackNavigationProp} from '@react-navigation/stack';
-// import {RootStackNavigatorParamsList} from './RootStackNavigatorParamsList';
-import { View, Text,  Button } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, FlatList, Text, View} from 'react-native';
+
+type Movie = {
+  id: string;
+  title: string;
+  releaseYear: string;
+};
 
 const Notes = () => {
-//   const navigation =
-//     useNavigation<StackNavigationProp<RootStackNavigatorParamsList>>();
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState<Movie[]>([]);
 
-//   const onHandlePress = () => {
-//     navigation.navigate("About");
- // };
+  const getMovies = async () => {
+    try {
+      const response = await fetch('https://reactnative.dev/movies.json');
+      const json = await response.json();
+      setData(json.movies);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getMovies();
+  }, []);
 
   return (
-    <View style={{backgroundColor:'#fafafa', flex:1}}>
-      <Text style={{color: 'red', alignContent:'center', textAlign:'center', margin: 50}}>Welcome to Note Screen!</Text>
-      <View style={{marginTop: 30}}>
-        <Button title="Go to Details"  />
-      </View>
+    <View style={{flex: 1, padding: 24, backgroundColor:'white'}}>
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={({id}) => id}
+          renderItem={({item}) => (
+            <View style={{borderWidth:1, borderColor: "#E0E0E0", padding:10, marginTop:5, borderRadius:15, backgroundColor:"#F5F5F5"}}>
+              <Text>
+              ID :  {item.id}
+              </Text>
+              <Text>
+              Title :  {item.title}
+              </Text>
+               <Text>
+              Release Year : {item.releaseYear}
+            </Text>
+            </View>
+           
+          )}
+        />
+      )}
     </View>
   );
 };

@@ -80,7 +80,7 @@ export default function App() {
           tabBarInactiveTintColor: '#5885af',
         })}
       >
-         <Tab.Screen name="HomeStack" component={NoteScreen} />
+         <Tab.Screen name="HomeStack" component={HomeScreen} />
         <Tab.Screen name="NoteStack" component={NoteScreen} />
       </Tab.Navigator>
     </NavigationContainer>
