@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './app/screen/Home';
 import NoteScreen from './app/screen/Notes';
+import ChangeLanScreen from './app/screen/ChangeLan';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // type RootStackNavigatorParamsList = {
@@ -72,6 +73,9 @@ export default function App() {
             } else if (route.name === 'NoteStack') {
               iconName = focused ? 'camera' : 'camera-outline';
             }
+            else if (route.name === 'LanguageStack') {
+              iconName = focused ? 'settings' : 'settings-outline';
+            }
 
             // You can return any component that you like here!
             return <Icon name={iconName} size={size} color={color} />;
@@ -82,6 +86,7 @@ export default function App() {
       >
          <Tab.Screen name="HomeStack" component={HomeScreen} />
         <Tab.Screen name="NoteStack" component={NoteScreen} />
+        <Tab.Screen name="LanguageStack" component={ChangeLanScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
